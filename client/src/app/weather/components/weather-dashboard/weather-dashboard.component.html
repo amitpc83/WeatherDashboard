@@ -1,0 +1,53 @@
+<div class="container mt-3">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Weather Dashboard</h2>   
+    <!-- Dropdown for setting user preferred unit -->
+    <div>      
+      <select class="form-select" [(ngModel)]="unit" (change)="setUserPreferredUnit(unit)">
+        <option value="metric">Celsius (°C)</option>
+        <option value="imperial">Fahrenheit (°F)</option>
+      </select>      
+    </div>
+  
+  </div>
+
+  <!-- Separator -->
+  <hr>
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <!-- Toggle switch for display unit -->
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" id="unitToggleSwitch" [checked]="displayUnit === 'imperial'" (change)="setDisplayUnit($event)">
+      <label class="form-check-label" for="unitToggleSwitch">
+        Display Unit: {{ displayUnit === 'metric' ? 'Celsius (°C)' : 'Fahrenheit (°F)' }}
+      </label>
+    </div>
+    <!-- Radio buttons for sunrise/sunset selection -->
+    <div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="timeOptions" id="sunriseOption" [checked]="showSunrise" (change)="toggleSunriseSunset(true)">
+        <label class="form-check-label" for="sunriseOption">Sunrise</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="timeOptions" id="sunsetOption" [checked]="!showSunrise" (change)="toggleSunriseSunset(false)">
+        <label class="form-check-label" for="sunsetOption">Sunset</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cards Section -->
+  <div class="row">
+    @if(errorMessage){
+      <div class="alert alert-danger">{{errorMessage}}</div>
+    }
+    @else {
+    <div class="col-md-4" *ngFor="let data of weatherData">
+      <app-weather-card
+        [weather]="data"
+        [displayUnit]="displayUnit"
+        [showSunrise]="showSunrise">
+      </app-weather-card>
+    </div>
+  }
+  </div>
+</div>
