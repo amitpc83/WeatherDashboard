@@ -26,6 +26,8 @@ namespace Greentube.Api
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
+                options.Cookie.SameSite = SameSiteMode.None;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
             });
             builder.Services.AddScoped<IWeatherService, WeatherService>();
             builder.Services.AddScoped<IHttpClientWrapper,HttpClientWrapper.HttpClientWrapper>();
